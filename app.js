@@ -81,3 +81,56 @@ function mostrarEmpleados() {
         divEmpleados.appendChild(hr);
     });
 }
+
+function cargarEmpleado(empleado) {
+    const {id, nombre, puesto} = empleado;
+
+    nombreInput.value = nombre;
+    puestoInput.value = puesto;
+
+    objEmpleado.id = id;
+
+    formulario.querySelector('button[type="submit"]').textContent = 'Actualizar';
+    
+    editando = true;
+}
+
+function editarEmpleado() {
+
+    objEmpleado.nombre = nombreInput.value;
+    objEmpleado.puesto = puestoInput.value;
+
+    listaEmpleados.map(empleado => {
+
+        if(empleado.id === objEmpleado.id) {
+            empleado.id = objEmpleado.id;
+            empleado.nombre = objEmpleado.nombre;
+            empleado.puesto = objEmpleado.puesto;
+
+        }
+
+    });
+
+    limpiarHTML();
+    mostrarEmpleados();
+    formulario.reset();
+
+    formulario.querySelector('button[type="submit"]').textContent = 'Agregar';
+    
+    editando = false;
+}
+
+function eliminarEmpleado(id) {
+
+    listaEmpleados = listaEmpleados.filter(empleado => empleado.id !== id);
+
+    limpiarHTML();
+    mostrarEmpleados();
+}
+
+function limpiarHTML() {
+    const divEmpleados = document.querySelector('.div-empleados');
+    while(divEmpleados.firstChild) {
+        divEmpleados.removeChild(divEmpleados.firstChild);
+    }
+}
